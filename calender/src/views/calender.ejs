@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%= title %>
+    </title>
+
+    <body>
+        <a href="./calender?year=<%= prevYear %>&month=<%= prevMonth %>">先月</a><br />
+        <h1><%= year %>年<%= month %>月</h1>
+        <table>
+            <tr align="center">
+                <td style="color:red">日</td>
+                <td>月</td>
+                <td>火</td>
+                <td>水</td>
+                <td>木</td>
+                <td>金</td>
+                <td>土</td>
+            </tr>
+            <%- date %>
+        </table><br />
+        <a href="./calender?year=<%= nextYear %>&month=<%= nextMonth %>">次月</a>
+    </body>
+</head>
+</html>

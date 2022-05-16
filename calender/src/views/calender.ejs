@@ -8,21 +8,73 @@
     </title>
 
     <body>
-        <a href="./calender?year=<%= prevYear %>&month=<%= prevMonth %>">先月</a><br />
+        <a href="./calender?year=<%= prevYear %>&month=<%= prevMonth %>&day=1">先月</a><br />
         <h1><%= year %>年<%= month %>月</h1>
         <table>
-            <tr align="center">
-                <td style="color:red">日</td>
-                <td>月</td>
-                <td>火</td>
-                <td>水</td>
-                <td>木</td>
-                <td>金</td>
-                <td>土</td>
+            <tr>
+                <td>
+                    <table>
+                        <tr align="center">
+                            <td style="color:red">日</td>
+                            <td>月</td>
+                            <td>火</td>
+                            <td>水</td>
+                            <td>木</td>
+                            <td>金</td>
+                            <td>土</td>
+                        </tr>
+                        <tr align="center">
+                            <% for(let i = 0; i < offset; i++){ %>
+                                <td></td>
+                            <% } %>
+                            <% for(let i = 1; i <= lastDateOfMonth; i++){ %>
+                                <% if(new Date(year, month - 1, i).getDay() == 0){ %>
+                                    </tr><tr align="center"><td> 
+                                        <% if( i == day){ %> 
+                                            <a href="./calender?year=<%= year %>&month=<%= month%>&day=<%= i %>"  style="color:red; background-color: yellow;"><%= i %></a>
+                                        <% } else { %>
+                                            <a href="./calender?year=<%= year %>&month=<%= month%>&day=<%= i %>"  style="color:red;"><%= i %></a>
+                                        <% } %>
+                                        </td>
+                                <% }else{ %>
+                                    <td><a href="./calender?year=<%= year %>&month=<%= month%>&day=<%= i %>" <% if( i == day){ %> style="background-color: yellow;" <% } %>><%= i %></a></td>
+                                <% } %>
+                            <% } %>
+                            <% for(let i = lastDateOfMonth; new Date(year,month,i).getDay() != 1; i++){ %>
+                                <td></td>
+                            <% } %>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <% if(schedules.length > 1){ %>
+                    <table>
+                        <tr>
+                            <td>日付</td>
+                            <td>タイトル</td>
+                            <td>詳細</td>
+                        </tr>
+                        <% schedules.forEach(schedule => { %>
+                            <tr>
+                                <td>
+                                    <%= schedule.date %>
+                                </td>
+                                <td>
+                                    <%= schedule.name %>
+                                </td>
+                                <td>
+                                    <%= schedule.name %>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </table> <br />
+                    <% } %>
+                    
+                </td>
             </tr>
-            <%- date %>
         </table><br />
-        <a href="./calender?year=<%= nextYear %>&month=<%= nextMonth %>">次月</a>
+        <a href="./calender?year=<%= nextYear %>&month=<%= nextMonth %>&day=1">次月</a>
+        <%= schedules %>
     </body>
 </head>
 </html>

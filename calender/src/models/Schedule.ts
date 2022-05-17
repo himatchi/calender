@@ -1,27 +1,21 @@
 import mongoose, {Schema, Document } from 'mongoose';
 
 export interface Schedule extends Document {
-    id: Number;
     name: String;
-    user: Number;
+    user: String;
     date: Date;
     text: String;
 }
 
 const scheduleSchema: Schema = new Schema(
     {
-        id: {
-            type: Number,
-            required: true,
-            unique: true
-        },
         name: {
             type: String,
             trim: true,
             required: true
         },
         user: {
-            type: Number,
+            type: String,
             required: true
         },
         date: {

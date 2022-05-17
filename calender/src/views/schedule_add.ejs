@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title><%= title %></title>
+    </head>
+    <body>
+        <h1>予定の追加</h1>
+        <%= user %>さん<br />        
+        <form action="./create" method="post">
+            <input type="hidden" name="user" value="<%= user %>">
+            <input type="hidden" name="year" value="<%= year %>">
+            <input type="hidden" name="month" value="<%= month %>">
+            <input type="hidden" name="date" value="<%= date %>">
+            <label for="name">タイトル</label>
+            <input type="text" name="name" autofocus required><br />
+            <label for="year">時間</label>
+            <input type="time" name="time" value="00:00" required><br />
+            <label for="text">内容</label>
+            <input type="text" name="text"><br />
+            <input type="submit" value="登録">
+        </form>
+    </body>
+</html>

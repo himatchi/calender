@@ -55,26 +55,35 @@
                             <td>詳細</td>
                         </tr>
                         <% schedules.forEach(schedule => { %>
+                            <% let dt = new Date(schedule.date); %>
                             <tr>
                                 <td>
-                                    <%= schedule.date %>
+                                    <%= dt.getHours() + "時" + dt.getMinutes() + "分" %>
                                 </td>
                                 <td>
                                     <%= schedule.name %>
                                 </td>
                                 <td>
-                                    <%= schedule.name %>
+                                    <%= schedule.text %>
                                 </td>
                             </tr>
                         <% }) %>
-                    </table> <br />
+                    </table>
+                    <% } else {%>
+                        予定はありません。
                     <% } %>
-                    
+                    <br />
+                    <form action="./add" method="post">
+                        <input type="hidden" name="user" value="<%=user%>">
+                        <input type="hidden" name="year" value="<%=year%>">
+                        <input type="hidden" name="month" value="<%=month%>">
+                        <input type="hidden" name="date" value="<%=day%>">
+                        <input type="submit" value="新規作成">
+                    </form>
                 </td>
             </tr>
         </table><br />
         <a href="./calender?year=<%= nextYear %>&month=<%= nextMonth %>&day=1">次月</a>
-        <%= schedules %>
     </body>
 </head>
 </html>

@@ -1,5 +1,4 @@
 import * as Express from "express";
-import { isDoStatement } from "typescript";
 import Schedule from "../models/Schedule";
 
 export default{
@@ -34,8 +33,6 @@ export default{
         }};
         try {
             const schedules = await Schedule.find(matchOption).exec();
-            console.log(matchOption);
-            console.log(schedules);
             res.locals.schedules = schedules;
             next();
         } catch (err) {
@@ -91,6 +88,7 @@ export default{
             "year": year,
             "month": month + 1,
             "day": day,
+            "user": "テストユーザー",
             "lastDateOfMonth": lastDateOfMonth,
             "offset": offset,
             "prevMonth": prevMonth,
@@ -100,6 +98,38 @@ export default{
             "schedules": schedules
         }
         res.render("./calender.ejs", data);
+    },
+    add: (req: Express.Request, res: Express.Response, next: Express.NextFunction) =>{
+        const user = req.body.user;
+        const year = req.body.year;
+        const month = req.body.month;
+        const date = req.body.date;
+        let data = {
+            title: "予定追加",
+            user: user,
+            year: year,
+            month: month,
+            date: date,
+        }
+        res.render("./schedule_add.ejs", data);
+    },
+    create: async (req: Express.Request, res: Express.Response, next: Express.NextFunction) =>{
+        const dt = new Date(Number(req.body.year), Number(req.body.month) - 1, Number(req.body.date));
+        const user: string = req.body.user;
+        const name: string = req.body.name;
+        const text: string = req.body.text;
+        const timeString : string = req.body.time;
+        const hour : number = Number(timeString.substring(0,2));
+        const minute : number = Number(timeString.substring(3,5));
+        dt.setHours(hour);
+        dt.setMinutes(minute);
+        const scheduleParams = {
+                name: name,
+                user: user,
+                date: dt,
+                text: text
+        }
+        
+        res.redirect("./calender");
     }
-
 }

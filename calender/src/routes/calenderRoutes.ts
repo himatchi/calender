@@ -6,6 +6,6 @@ const router = Express.Router();
 router.get("/", calenderController.index, calenderController.indexView);
 // router.get("/", calenderController.indexView);
 router.post("/add", calenderController.add);
-router.post("/create", calenderController.create);
+router.post("/create", calenderController.create, calenderController.redirectView);
 
 export default router;

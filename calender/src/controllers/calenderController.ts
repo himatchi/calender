@@ -33,6 +33,7 @@ export default{
         }};
         try {
             const schedules = await Schedule.find(matchOption).exec();
+            console.log(schedules);
             res.locals.schedules = schedules;
             next();
         } catch (err) {
@@ -129,7 +130,20 @@ export default{
                 date: dt,
                 text: text
         }
-        
-        res.redirect("./calender");
+        try {
+            await Schedule.create(scheduleParams);
+            res.locals.redirect = '/calender?year=' + req.body.year + '&month=' + req.body.month + '&day=' + req.body.date;
+            next();
+        }catch(err){
+            next(err);
+        }
+    },
+    redirectView: (req: Express.Request, res: Express.Response, next: Express.NextFunction) =>{
+        const redirect = res.locals.redirect;
+        if (redirect){
+            res.redirect(redirect);
+        }else{
+            next();
+        }
     }
 }

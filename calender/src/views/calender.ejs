@@ -47,7 +47,7 @@
                     </table>
                 </td>
                 <td>
-                    <% if(schedules.length > 1){ %>
+                    <% if(schedules.length > 0){ %>
                     <table>
                         <tr>
                             <td>日付</td>
@@ -58,7 +58,7 @@
                             <% let dt = new Date(schedule.date); %>
                             <tr>
                                 <td>
-                                    <%= dt.getHours() + "時" + dt.getMinutes() + "分" %>
+                                    <%= Number(dt.getMinutes()) == 0 ? dt.getHours() + "時" : dt.getHours() + "時" + dt.getMinutes() + "分" %>
                                 </td>
                                 <td>
                                     <%= schedule.name %>
@@ -73,7 +73,7 @@
                         予定はありません。
                     <% } %>
                     <br />
-                    <form action="./add" method="post">
+                    <form action="/calender/add" method="post">
                         <input type="hidden" name="user" value="<%=user%>">
                         <input type="hidden" name="year" value="<%=year%>">
                         <input type="hidden" name="month" value="<%=month%>">

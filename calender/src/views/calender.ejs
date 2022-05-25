@@ -6,84 +6,124 @@
     <title>
         <%= title %>
     </title>
+    <script type="text/javascript">
+        function post(path, params, method='post'){
+            const form = document.createElement('form');
+            form.method = method;
+            form.action = path;
+            for (const key in params){
+                const hiddenField = document.createElement('input');
+                hiddenField.type = 'hidden';
+                hiddenField.name = key;
+                hiddenField.value = params[key];
 
-    <body>
-        <a href="./calender?year=<%= prevYear %>&month=<%= prevMonth %>&day=1">先月</a><br />
-        <h1><%= year %>年<%= month %>月</h1>
-        <table>
-            <tr>
-                <td>
-                    <table>
-                        <tr align="center">
-                            <td style="color:red">日</td>
-                            <td>月</td>
-                            <td>火</td>
-                            <td>水</td>
-                            <td>木</td>
-                            <td>金</td>
-                            <td>土</td>
-                        </tr>
-                        <tr align="center">
-                            <% for(let i = 0; i < offset; i++){ %>
-                                <td></td>
-                            <% } %>
-                            <% for(let i = 1; i <= lastDateOfMonth; i++){ %>
-                                <% if(new Date(year, month - 1, i).getDay() == 0){ %>
-                                    </tr><tr align="center"><td> 
-                                        <% if( i == day){ %> 
-                                            <a href="./calender?year=<%= year %>&month=<%= month%>&day=<%= i %>"  style="color:red; background-color: yellow;"><%= i %></a>
-                                        <% } else { %>
-                                            <a href="./calender?year=<%= year %>&month=<%= month%>&day=<%= i %>"  style="color:red;"><%= i %></a>
-                                        <% } %>
-                                        </td>
-                                <% }else{ %>
-                                    <td><a href="./calender?year=<%= year %>&month=<%= month%>&day=<%= i %>" <% if( i == day){ %> style="background-color: yellow;" <% } %>><%= i %></a></td>
-                                <% } %>
-                            <% } %>
-                            <% for(let i = lastDateOfMonth; new Date(year,month,i).getDay() != 1; i++){ %>
-                                <td></td>
-                            <% } %>
-                        </tr>
-                    </table>
-                </td>
-                <td>
-                    <% if(schedules.length > 0){ %>
-                    <table>
-                        <tr>
-                            <td>日付</td>
-                            <td>タイトル</td>
-                            <td>詳細</td>
-                        </tr>
-                        <% schedules.forEach(schedule => { %>
-                            <% let dt = new Date(schedule.date); %>
-                            <tr>
-                                <td>
-                                    <%= Number(dt.getMinutes()) == 0 ? dt.getHours() + "時" : dt.getHours() + "時" + dt.getMinutes() + "分" %>
-                                </td>
-                                <td>
-                                    <%= schedule.name %>
-                                </td>
-                                <td>
-                                    <%= schedule.text %>
-                                </td>
-                            </tr>
-                        <% }) %>
-                    </table>
-                    <% } else {%>
-                        予定はありません。
-                    <% } %>
-                    <br />
-                    <form action="/calender/add" method="post">
-                        <input type="hidden" name="user" value="<%=user%>">
-                        <input type="hidden" name="year" value="<%=year%>">
-                        <input type="hidden" name="month" value="<%=month%>">
-                        <input type="hidden" name="date" value="<%=day%>">
-                        <input type="submit" value="新規作成">
-                    </form>
-                </td>
-            </tr>
-        </table><br />
-        <a href="./calender?year=<%= nextYear %>&month=<%= nextMonth %>&day=1">次月</a>
-    </body>
+                form.appendChild(hiddenField);
+            }
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
 </head>
+<body>
+    <a href="./calender?year=<%= prevYear %>&month=<%= prevMonth %>&day=1">先月</a><br />
+    <h1><%= year %>年<%= month %>月</h1>
+    <table>
+        <tr>
+            <td>
+                <table>
+                    <tr align="center">
+                        <td style="color:red">日</td>
+                        <td>月</td>
+                        <td>火</td>
+                        <td>水</td>
+                        <td>木</td>
+                        <td>金</td>
+                        <td>土</td>
+                    </tr>
+                    <tr align="center">
+                        <% for(let i = 0; i < offset; i++){ %>
+                            <td></td>
+                        <% } %>
+                        <% for(let i = 1; i <= lastDateOfMonth; i++){ %>
+                            <% if(new Date(year, month - 1, i).getDay() == 0){ %>
+                                </tr><tr align="center"><td> 
+                                    <% if( i == day){ %> 
+                                        <a href="./calender?year=<%= year %>&month=<%= month%>&day=<%= i %>"  style="color:red; background-color: yellow;"><%= i %></a>
+                                    <% } else { %>
+                                        <a href="./calender?year=<%= year %>&month=<%= month%>&day=<%= i %>"  style="color:red;"><%= i %></a>
+                                    <% } %>
+                                    </td>
+                            <% }else{ %>
+                                <td><a href="./calender?year=<%= year %>&month=<%= month%>&day=<%= i %>" <% if( i == day){ %> style="background-color: yellow;" <% } %>><%= i %></a></td>
+                            <% } %>
+                        <% } %>
+                        <% for(let i = lastDateOfMonth; new Date(year,month,i).getDay() != 1; i++){ %>
+                            <td></td>
+                        <% } %>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <% if(schedules.length > 0){ %>
+                <table>
+                    <tr>
+                        <td></td>
+                        <td>時間</td>
+                        <td>カテゴリ</td>
+                        <td>タイトル</td>
+                        <td>詳細</td>
+                    </tr>
+                    <% schedules.forEach(schedule => { %>
+                        <% let dt = new Date(schedule.date); %>
+                        <% let end = new Date(schedule.end); %>
+                        <tr>
+                            <td><button type="button" onclick="post('/calender/edit', {
+                                title: '予定変更',
+                                _id: '<%= schedule._id %>',
+                                user: '<%= schedule.user %>',
+                                year: '<%= year %>',
+                                month: '<%= month %>',
+                                date: '<%= day %>',
+                                name: '<%= schedule.name %>',
+                                time: '<%= dt %>',
+                                end: '<%= end %>',
+                                allday: '<%= schedule.allday %>',
+                                category: '<%= schedule.category %>',
+                                text: '<%= schedule.text %>',
+                            })">編集</button></td>
+                            <td>
+                                <% if(schedule.allday == false) {%>
+                                <%= Number(dt.getMinutes()) == 0 ? dt.getHours() + "時" : dt.getHours() + "時" + dt.getMinutes() + "分" %>〜<%= Number(end.getMinutes()) == 0 ? end.getHours() + "時" : end.getHours() + "時" + end.getMinutes() + "分" %>
+                                <% }else{ %>
+                                終日
+                                <% } %>
+                            </td>
+                            <td>
+                                <%= schedule.category %>
+                            </td>
+                            <td>
+                                <%= schedule.name %>
+                            </td>
+                            <td>
+                                <%= schedule.text %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </table>
+                <% } else {%>
+                    予定はありません。
+                <% } %>
+                <br />
+                <button type="button" onclick="post('/calender/add', {
+                    title: '予定の追加',
+                    user: '<%= user %>',
+                    year: '<%= year %>',
+                    month: '<%= month %>',
+                    date: '<%= day %>'
+                })">新規作成</button>
+            </td>
+        </tr>
+    </table><br />
+    <a href="./calender?year=<%= nextYear %>&month=<%= nextMonth %>&day=1">次月</a>
+</body>
 </html>

@@ -4,29 +4,30 @@
         <title><%= title %></title>
     </head>
     <body>
-        <h1>予定の追加</h1>
+        <h1>予定の変更</h1>
         <%= user %>さん<br />        
-        <form action="/calender/create" method="post">
+        <form action="/calender/update" method="post">
+            <input type="hidden" name="_id" value="<%= _id %>">
             <input type="hidden" name="user" value="<%= user %>">
             <input type="hidden" name="year" value="<%= year %>">
             <input type="hidden" name="month" value="<%= month %>">
             <input type="hidden" name="date" value="<%= date %>">
             <label for="name">タイトル</label>
-            <input id="name" type="text" name="name" autofocus required><br />
+            <input id="name" type="text" name="name" value="<%= name %>" autofocus required><br />
             <label for="time">時間</label>
-            <input id="time" type="time" name="time" value="00:00" required>
+            <input id="time" type="time" name="time" value="<%= time_format_hhmm(time); %>" required>
             〜
             <label for="end"></label>
-            <input id="end" type="time" name="end" value="00:00" required><br />
+            <input id="end" type="time" name="end" value="<%= time_format_hhmm(end); %>" required><br />
             <label for="allday">終日</label>
-            <input id="allday" type="checkbox" name="allday"><br />
+            <input id="allday" type="checkbox" name="allday" <%= allday == true ? 'checked' : '' %>><br />
             <label for="category">カテゴリ</label>
             <select id="category" name="category" required>
-                <option value="社内作業">社内作業</option>
-                <option value="社外作業">社外作業</option>
+                <option value="社内作業" <%= category == '社内作業' ? 'selected' : '' %>>社内作業</option>
+                <option value="社外作業" <%= category == '社外作業' ? 'selected' : '' %>>社外作業</option>
             </select><br />
             <label for="text">内容</label>
-            <input id="text" type="text" name="text"><br />
+            <input id="text" type="text" name="text" value="<%= text %>"><br />
             <input type="submit" value="登録">
         </form>
         <script type="text/javascript">
@@ -48,3 +49,14 @@
         </script>
     </body>
 </html>
+
+<% 
+function time_format_hhmm(date){
+    let dt = new Date(date);
+    let retval = "";
+    retval += ('00' + dt.getHours()).slice(-2);
+    retval += ':';
+    retval += ('00' + dt.getMinutes()).slice(-2);
+    return retval;
+}
+%>

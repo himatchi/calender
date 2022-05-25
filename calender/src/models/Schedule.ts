@@ -1,9 +1,12 @@
-import mongoose, {Schema, Document } from 'mongoose';
+import mongoose, {Schema, Document, ObjectId } from 'mongoose';
 
 export interface Schedule extends Document {
     name: String;
     user: String;
+    category: String;
+    allday: Boolean;
     date: Date;
+    end: Date;
     text: String;
 }
 
@@ -18,8 +21,20 @@ const scheduleSchema: Schema = new Schema(
             type: String,
             required: true
         },
+        category: {
+            type: String,
+            required: true
+        },
+        allday: {
+            type: Boolean,
+            required: true
+        },
         date: {
             type: Date,
+            required: true
+        },
+        end: {
+            type:Date,
             required: true
         },
         text: {

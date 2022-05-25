@@ -19,6 +19,7 @@ app.set("view engine", "ejs");
 app.set('views', './src/views');
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(cookieParser());
+app.use(Express.static(__dirname + '/public'));
 app.use('/' , router);
 app.listen(port, () => {
     console.log("listening on port 3000!");

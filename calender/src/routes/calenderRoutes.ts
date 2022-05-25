@@ -7,5 +7,6 @@ router.get("/", calenderController.index, calenderController.indexView);
 // router.get("/", calenderController.indexView);
 router.post("/add", calenderController.add);
 router.post("/create", calenderController.create, calenderController.redirectView);
-
+router.post("/edit", calenderController.edit);
+router.post("/update", calenderController.update, calenderController.redirectView);
 export default router;

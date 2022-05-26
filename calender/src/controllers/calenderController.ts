@@ -3,16 +3,6 @@ import Schedule from "../models/Schedule";
 
 export default{
     index: async (req: Express.Request, res: Express.Response, next: Express.NextFunction) =>{
-        if(req.cookies.user == undefined){
-            res.cookie('user', 'テストユーザー', {
-                maxAge: 60000,
-                sameSite: 'lax',
-            });
-            res.cookie('username', 'テストユーザー', {
-                maxAge: 60000,
-                sameSite: 'lax'
-            });
-        }
         //デフォルトは当日
         const today: Date = new Date();
         let year: number = today.getFullYear();
@@ -37,13 +27,24 @@ export default{
                 day = Number(checkValueDay);
             }
         }
-        const matchOption = {user: req.cookies.user,
+        if(req.session.login == undefined){
+            return res.redirect('../?year=' + year + '&month=' + (month+1) + '&day=' + day);
+        }
+
+        const query = {
+            user: req.session.login,
             date : {
             $gte : new Date(year, month, day).toISOString(),
             $lt : new Date(year, month, day + 1).toISOString()
         }};
+        const queryOption = {
+            sort:{
+                allday: -1,
+                date: 1,
+            },
+        };
         try {
-            const schedules = await Schedule.find(matchOption).exec();
+            const schedules = await Schedule.find(query, null , queryOption);
             res.locals.schedules = schedules;
             next();
         } catch (err) {
@@ -96,10 +97,10 @@ export default{
         let data = {
         //    "calender": retValue,
             "title": "Calender",
+            "username": req.session.name,
             "year": year,
             "month": month + 1,
             "day": day,
-            "user": "テストユーザー",
             "lastDateOfMonth": lastDateOfMonth,
             "offset": offset,
             "prevMonth": prevMonth,
@@ -111,13 +112,13 @@ export default{
         res.render("./calender.ejs", data);
     },
     add: (req: Express.Request, res: Express.Response, next: Express.NextFunction) =>{
-        const user = req.body.user;
+        const username = req.session.name;
         const year = req.body.year;
         const month = req.body.month;
         const date = req.body.date;
         let data = {
             title: "予定追加",
-            user: user,
+            username: username,
             year: year,
             month: month,
             date: date,
@@ -127,7 +128,7 @@ export default{
     create: async (req: Express.Request, res: Express.Response, next: Express.NextFunction) =>{
         const dt = new Date(Number(req.body.year), Number(req.body.month) - 1, Number(req.body.date));
         const dt_end = new Date(Number(req.body.year), Number(req.body.month) - 1, Number(req.body.date));
-        const user: string = req.body.user;
+        const user: string = req.session.login;
         const name: string = req.body.name;
         const text: string = req.body.text;
         const category: string = req.body.category;
@@ -171,7 +172,7 @@ export default{
         const _id = req.body._id;
         const dt = new Date(Number(req.body.year), Number(req.body.month) - 1, Number(req.body.date));
         const dt_end = new Date(Number(req.body.year), Number(req.body.month) - 1, Number(req.body.date));
-        const user: string = req.body.user;
+        const user: string = req.session.login;
         const name: string = req.body.name;
         const text: string = req.body.text;
         const category: string = req.body.category;
@@ -208,8 +209,18 @@ export default{
             next(err);
         }
     },
-    delete: (req: Express.Request, res: Express.Response, next: Express.NextFunction) =>{
-
+    delete: async(req: Express.Request, res: Express.Response, next: Express.NextFunction) =>{
+        const scheduleId: string = req.body._id;
+        const year: string = req.body.year;
+        const month: string = req.body.month;
+        const day: string = req.body.day;
+        try {
+            await Schedule.findByIdAndRemove(scheduleId);
+            res.locals.redirect = '/calender?year=' + req.body.year + '&month=' + req.body.month + '&day=' + req.body.day;
+            next();
+        }catch (err){
+            next(err);
+        }
     },
     redirectView: (req: Express.Request, res: Express.Response, next: Express.NextFunction) =>{
         const redirect = res.locals.redirect;

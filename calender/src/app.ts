@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import router from "./routes";
 import mongoose from "mongoose";
+import session from "express-session";
 try{
     mongoose.connect('mongodb://localhost:27017/calender_db');
 }catch(err){
@@ -17,6 +18,14 @@ const port = 3000;
 
 app.set("view engine", "ejs");
 app.set('views', './src/views');
+
+app.use(session({
+    secret: 'imoj1o2joi8a098j0981nus9j0qj2',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 60 * 60 * 1000},
+}));
+
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(cookieParser());
 app.use(Express.static(__dirname + '/public'));

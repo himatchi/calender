@@ -5,9 +5,8 @@
     </head>
     <body>
         <h1>予定の追加</h1>
-        <%= user %>さん<br />        
+        <%= username %>さん<br />        
         <form action="/calender/create" method="post">
-            <input type="hidden" name="user" value="<%= user %>">
             <input type="hidden" name="year" value="<%= year %>">
             <input type="hidden" name="month" value="<%= month %>">
             <input type="hidden" name="date" value="<%= date %>">

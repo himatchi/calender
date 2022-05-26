@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>ログイン</title>
+    </head>
+    <h1>ログイン</h1>
+    <div style="min-width: min-content; max-width: fit-content; text-align: right">
+        <form method="post">
+            <label for="id">ID</label>
+            <input type="text" name="id" pattern="^[0-9a-zA-Z_]+$" <%- userId != undefined ? 'value="' + userId + '"' : '' %> required><br />
+            <label for="password">PW</label>
+            <input type="password" autocomplete="current-password" id="currentpassword" name="password" required><br />
+            <%- failed_login == true ? '<div style="color: red; font-weight: bold">IDまたはパスワードが違います</div>' : '' %>
+            <input type="submit" value="ログイン">
+        </form>
+    </div>
+    <a href="/user/signup">新規登録はこちら</a>
+</html>

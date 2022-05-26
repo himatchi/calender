@@ -9,4 +9,5 @@ router.post("/add", calenderController.add);
 router.post("/create", calenderController.create, calenderController.redirectView);
 router.post("/edit", calenderController.edit);
 router.post("/update", calenderController.update, calenderController.redirectView);
+router.post("/delete", calenderController.delete, calenderController.redirectView);
 export default router;

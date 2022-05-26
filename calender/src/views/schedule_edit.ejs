@@ -5,10 +5,9 @@
     </head>
     <body>
         <h1>予定の変更</h1>
-        <%= user %>さん<br />        
+        <%= username %>さん<br />
         <form action="/calender/update" method="post">
             <input type="hidden" name="_id" value="<%= _id %>">
-            <input type="hidden" name="user" value="<%= user %>">
             <input type="hidden" name="year" value="<%= year %>">
             <input type="hidden" name="month" value="<%= month %>">
             <input type="hidden" name="date" value="<%= date %>">
@@ -20,7 +19,7 @@
             <label for="end"></label>
             <input id="end" type="time" name="end" value="<%= time_format_hhmm(end); %>" required><br />
             <label for="allday">終日</label>
-            <input id="allday" type="checkbox" name="allday" <%= allday == true ? 'checked' : '' %>><br />
+            <input id="allday" type="checkbox" name="allday" <%= allday == 'true' ? 'checked' : '' %>><br />
             <label for="category">カテゴリ</label>
             <select id="category" name="category" required>
                 <option value="社内作業" <%= category == '社内作業' ? 'selected' : '' %>>社内作業</option>

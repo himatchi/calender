@@ -13,11 +13,13 @@
             <input type="hidden" name="date" value="<%= date %>">
             <label for="name">タイトル</label>
             <input id="name" type="text" name="name" value="<%= name %>" autofocus required><br />
+            <span id="timecontrol" <%= allday == 'true' ? 'hidden' : '' %>>
             <label for="time">時間</label>
             <input id="time" type="time" name="time" value="<%= time_format_hhmm(time); %>" required>
             〜
             <label for="end"></label>
-            <input id="end" type="time" name="end" value="<%= time_format_hhmm(end); %>" required><br />
+            <input id="end" type="time" name="end" value="<%= time_format_hhmm(end); %>" required>
+            </span><br />
             <label for="allday">終日</label>
             <input id="allday" type="checkbox" name="allday" <%= allday == 'true' ? 'checked' : '' %>><br />
             <label for="category">カテゴリ</label>
@@ -28,6 +30,7 @@
             <label for="text">内容</label>
             <input id="text" type="text" name="text" value="<%= text %>"><br />
             <input type="submit" value="登録">
+            <input type="button" onclick="window.location.href = '/calender?year=<%= year %>&month=<%= month %>&day=<%= date %>'" value="キャンセル">
         </form>
         <script type="text/javascript">
             window.addEventListener("DOMContentLoaded" , function(){
@@ -35,13 +38,10 @@
                 checkbox_allday.addEventListener("change", function(){
                     var time = document.getElementById('time');
                     var end = document.getElementById('end');
-                    if(document.getElementById('allday').check == true){
-                        end.setAttribute('value',time.getAttribute('value'));
-                        time.disabled = true;
-                        end.disabled = true;
+                    if(document.getElementById('allday').checked == true){
+                        timecontrol.hidden = true;
                     }else{
-                        time.disabled = false;
-                        end.disabledx = false;
+                        timecontrol.hidden = false;
                     }
                 })
             });

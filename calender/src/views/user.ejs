@@ -6,21 +6,38 @@
  * see https://opensource.org/licenses/MIT
  */
 %> 
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf8">
-        <title>ログイン</title>
-    </head>
-    <h1>ログイン</h1>
-    <div style="min-width: min-content; max-width: fit-content; text-align: right">
-        <form method="post">
-            <label for="id">ID</label>
-            <input type="text" name="id" pattern="^[0-9a-zA-Z_]+$" <%- userId != undefined ? 'value="' + userId + '"' : '' %> required><br />
-            <label for="password">PW</label>
-            <input type="password" autocomplete="current-password" id="currentpassword" name="password" required><br />
-            <%- failed_login == true ? '<div style="color: red; font-weight: bold">IDまたはパスワードが違います</div>' : '' %>
-            <input type="submit" value="ログイン">
-        </form>
+<head>
+    <meta charset="utf8">
+    <title>ログイン</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />    
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>ログイン</h1>
+                <div style="min-width: min-content; max-width: fit-content; text-align: right">
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="id">ID</label>
+                            <input type="text" name="id" pattern="^[0-9a-zA-Z_]+$" class="form-control-inline" <%- userId != undefined ? 'value="' + userId + '"' : '' %> required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">PW</label>
+                            <input type="password" autocomplete="current-password" id="currentpassword" name="password" class="form-control-inline" required><br />
+                            <%- failed_login == true ? '<div style="color: red; font-weight: bold">IDまたはパスワードが違います</div>' : '' %>
+                        </div>
+                        <input class="btn btn-primary" type="submit" value="ログイン">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <a href="/user/signup">新規登録はこちら</a>
     </div>
-    <a href="/user/signup">新規登録はこちら</a>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>        
+</body>
 </html>

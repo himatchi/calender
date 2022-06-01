@@ -54,6 +54,10 @@ export default {
         }
     },
     logout: (req: Express.Request, res: Express.Response, next: Express.NextFunction) =>{
+        req.session.destroy((err)=>{
+            res.send(err);
+            return;
+        });
         res.redirect('../');
     },
     signup: (req: Express.Request, res: Express.Response, next: Express.NextFunction) =>{

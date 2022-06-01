@@ -35,9 +35,11 @@
     </script>
 </head>
 <body>
-    <a href="./calender?year=<%= prevYear %>&month=<%= prevMonth %>&day=1">先月</a>　　　　　
-    <a href="./calender?year=<%= nextYear %>&month=<%= nextMonth %>&day=1">次月</a><br />
-    <h1><%= year %>年<%= month %>月　　<%= username %>さん</h1>
+    <a href="/calender?year=<%= prevYear %>&month=<%= prevMonth %>&day=1">先月</a>　　　　　
+    <a href="/calender?year=<%= nextYear %>&month=<%= nextMonth %>&day=1">次月</a>　　　
+    <a href="/user/logout">ログアウト</a>
+    <br />
+    <h1><%= year %>年<%= month %>月　<%= username %>さん</h1>
     <table>
         <tr>
             <td valign="top">
@@ -59,13 +61,13 @@
                             <% if(new Date(year, month - 1, i).getDay() == 0){ %>
                                 </tr><tr align="center"><td> 
                                     <% if( i == day){ %> 
-                                        <a href="./calender?year=<%= year %>&month=<%= month%>&day=<%= i %>"  style="color:red; background-color: yellow;"><%= i %></a>
+                                        <a href="/calender?year=<%= year %>&month=<%= month%>&day=<%= i %>"  style="color:red; background-color: yellow;"><%= i %></a>
                                     <% } else { %>
-                                        <a href="./calender?year=<%= year %>&month=<%= month%>&day=<%= i %>"  style="color:red;"><%= i %></a>
+                                        <a href="/calender?year=<%= year %>&month=<%= month%>&day=<%= i %>"  style="color:red;"><%= i %></a>
                                     <% } %>
                                     </td>
                             <% }else{ %>
-                                <td><a href="./calender?year=<%= year %>&month=<%= month%>&day=<%= i %>" <% if( i == day){ %> style="background-color: yellow;" <% } %>><%= i %></a></td>
+                                <td><a href="/calender?year=<%= year %>&month=<%= month%>&day=<%= i %>" <% if( i == day){ %> style="background-color: yellow;" <% } %>><%= i %></a></td>
                             <% } %>
                         <% } %>
                         <% for(let i = lastDateOfMonth; new Date(year,month,i).getDay() != 1; i++){ %>

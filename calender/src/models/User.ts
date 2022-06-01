@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2022 himatchi
+ *
+ * Released under the MIT license.
+ * see https://opensource.org/licenses/MIT
+ */
 import mongoose, {Schema, Document, ObjectId } from 'mongoose';
 
 export interface User extends Document {

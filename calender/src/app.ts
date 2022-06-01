@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2022 himatchi
+ *
+ * Released under the MIT license.
+ * see https://opensource.org/licenses/MIT
+ */
 import Express from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";

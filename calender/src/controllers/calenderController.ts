@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2022 himatchi
+ *
+ * Released under the MIT license.
+ * see https://opensource.org/licenses/MIT
+ */
 import * as Express from "express";
 import Schedule from "../models/Schedule";
 

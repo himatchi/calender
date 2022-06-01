@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2022 himatchi
+ *
+ * Released under the MIT license.
+ * see https://opensource.org/licenses/MIT
+ */
 import Express from "express";
 import homeRoutes from "./homeRoutes";
 import calenderRoutes from "./calenderRoutes";
